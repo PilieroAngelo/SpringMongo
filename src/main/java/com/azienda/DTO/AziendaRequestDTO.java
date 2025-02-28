@@ -4,8 +4,15 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+@Getter
+@Setter
+@EqualsAndHashCode
 @Document(collection = "aziende")
 public class AziendaRequestDTO {
 
@@ -29,38 +36,6 @@ public class AziendaRequestDTO {
         this.numeroPersonale = numeroPersonale;
         this.nomeAzienda = nomeAzienda;
         this.nettoAnnuale = nettoAnnuale;
-    }
-
-    public double getNettoAnnuale() {
-        return nettoAnnuale;
-    }
-
-    public void setNettoAnnuale(double nettoAnnuale) {
-        this.nettoAnnuale = nettoAnnuale;
-    }
-
-    public String getPIVA() {
-        return PIVA;
-    }
-
-    public void setPIVA(String PIVA) {
-        this.PIVA = PIVA;
-    }
-
-    public int getNumeroPersonale() {
-        return numeroPersonale;
-    }
-
-    public void setNumeroPersonale(int numeroPersonale) {
-        this.numeroPersonale = numeroPersonale;
-    }
-
-    public String getNomeAzienda() {
-        return nomeAzienda;
-    }
-
-    public void setNomeAzienda(String nomeAzienda) {
-        this.nomeAzienda = nomeAzienda;
     }
 }
 

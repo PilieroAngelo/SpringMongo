@@ -1,8 +1,13 @@
 package com.azienda.Entity;
 
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+@Getter
+@Setter
 @Document(collection = "aziende")
 public class Azienda {
     @Id
@@ -24,43 +29,41 @@ public class Azienda {
         this.nomeAzienda = nomeAzienda;
     }
 
-    public String getId() {
-        return id;
-    }
 
-    public void setId(String id) {
-        this.id = id;
-    }
 
-    public double getNettoAnnuale() {
-        return nettoAnnuale;
-    }
+    public static class Builder {
+        private String nomeAzienda;
+        private int numeroPersonale;
+        private String PIVA;
+        private double nettoAnnuale;
 
-    public void setNettoAnnuale(double nettoAnnuale) {
-        this.nettoAnnuale = nettoAnnuale;
-    }
+        public Builder nomeAzienda(String nomeAzienda) {
+            this.nomeAzienda = nomeAzienda;
+            return this;
+        }
 
-    public String getPIVA() {
-        return PIVA;
-    }
+        public Builder numeroPersonale(int numeroPersonale) {
+            this.numeroPersonale = numeroPersonale;
+            return this;
+        }
 
-    public void setPIVA(String PIVA) {
-        this.PIVA = PIVA;
-    }
+        public Builder PIVA(String PIVA) {
+            this.PIVA = PIVA;
+            return this;
+        }
 
-    public int getNumeroPersonale() {
-        return numeroPersonale;
-    }
+        public Builder nettoAnnuale(double nettoAnnuale) {
+            this.nettoAnnuale = nettoAnnuale;
+            return this;
+        }
 
-    public void setNumeroPersonale(int numeroPersonale) {
-        this.numeroPersonale = numeroPersonale;
-    }
-
-    public String getNomeAzienda() {
-        return nomeAzienda;
-    }
-
-    public void setNomeAzienda(String nomeAzienda) {
-        this.nomeAzienda = nomeAzienda;
+        public Azienda build() {
+            Azienda azienda = new Azienda();
+            azienda.nomeAzienda = this.nomeAzienda;
+            azienda.numeroPersonale = this.numeroPersonale;
+            azienda.PIVA = this.PIVA;
+            azienda.nettoAnnuale = this.nettoAnnuale;
+            return azienda;
+        }
     }
 }

@@ -4,42 +4,33 @@ import com.azienda.DTO.AziendaRequestDTO;
 import com.azienda.DTO.AziendaRequestPatchDTO;
 import com.azienda.DTO.AziendaResponseDTO;
 import com.azienda.Entity.Azienda;
-import com.azienda.Repository.AziendaRepo;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class AziendaMapperManuale {
-    public final AziendaRepo aziendaRepo;
+public class AziendaMapper {
 
-    public AziendaMapperManuale(AziendaRepo aziendaRepo) {
-        this.aziendaRepo = aziendaRepo;
-    }
+    public AziendaMapper() {
 
-    public Azienda toEntity(AziendaRequestDTO aziendaRequestDTO) {
-        Azienda azienda = new Azienda();
-        azienda.setNomeAzienda(aziendaRequestDTO.getNomeAzienda());
-        azienda.setNumeroPersonale(aziendaRequestDTO.getNumeroPersonale());
-        azienda.setPIVA(aziendaRequestDTO.getPIVA());
-        azienda.setNettoAnnuale(aziendaRequestDTO.getNettoAnnuale());
-        return azienda;
     }
+//usa builder
+public Azienda toEntity(AziendaRequestDTO aziendaRequestDTO) {
+    return new Azienda.Builder()
+            .nomeAzienda(aziendaRequestDTO.getNomeAzienda())
+            .numeroPersonale(aziendaRequestDTO.getNumeroPersonale())
+            .PIVA(aziendaRequestDTO.getPIVA())
+            .nettoAnnuale(aziendaRequestDTO.getNettoAnnuale())
+            .build();
+}
 
     public void updateEntityFromDTO(AziendaRequestDTO dto, Azienda entity) {
-        if (dto.getNomeAzienda() != null) {
             entity.setNomeAzienda(dto.getNomeAzienda());
-        }
-        if (dto.getNumeroPersonale() >= 0) {
             entity.setNumeroPersonale(dto.getNumeroPersonale());
-        }
-       if (dto.getNettoAnnuale() != 0) {
             entity.setNettoAnnuale(dto.getNettoAnnuale());
-        }
     }
 
-    public AziendaResponseDTO entityToResponseDTO(Azienda azienda){//nel service da richiamare
+    public AziendaResponseDTO entityToResponseDTO(Azienda azienda) {
         AziendaResponseDTO aziendaResponseDTO = new AziendaResponseDTO();
         aziendaResponseDTO.setId(azienda.getId());
         aziendaResponseDTO.setNomeAzienda(azienda.getNomeAzienda());
@@ -48,6 +39,7 @@ public class AziendaMapperManuale {
         aziendaResponseDTO.setNettoAnnuale(azienda.getNettoAnnuale());
         return aziendaResponseDTO;
     }
+
 
     public void updateEntityFromPatchDTO(AziendaRequestPatchDTO patchDTO, Azienda entity) {
         if (patchDTO.getNomeAzienda() != null) {
@@ -62,11 +54,8 @@ public class AziendaMapperManuale {
     }
 
     public List<AziendaResponseDTO> toList(List<Azienda> azienda) {
-        List<AziendaResponseDTO> aziendaResponseDTOList = new ArrayList<>();
-        for (Azienda aziendaEntity : azienda) {
-            aziendaResponseDTOList.add(entityToResponseDTO(aziendaEntity)); // Usa il metodo toDTO che hai già creato
-        }
-        return aziendaResponseDTOList;
+        return azienda.stream().map(this::entityToResponseDTO).toList();
     }
+
 
 }

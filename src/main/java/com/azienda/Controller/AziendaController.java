@@ -15,7 +15,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -51,12 +50,7 @@ public class AziendaController {
                     content = @Content(
                             schema = @Schema(implementation = ErrorDetails.class)))
     })
-    public ResponseEntity<?> insert(@Valid @RequestBody AziendaRequestDTO aziendaRequestDTO, BindingResult bindResult) {
-        if (bindResult.hasErrors()) {
-            StringBuilder errore = new StringBuilder("Errore di validazione: ");
-            bindResult.getAllErrors().forEach(error -> errore.append(error.getDefaultMessage()).append("; \n"));
-            return new ResponseEntity<>(errore.toString(), HttpStatus.BAD_REQUEST);
-        }
+    public ResponseEntity<?> insert(@Valid @RequestBody AziendaRequestDTO aziendaRequestDTO) {
        AziendaResponseDTO response = service.insert(aziendaRequestDTO);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
@@ -74,6 +68,22 @@ public class AziendaController {
     public List<AziendaResponseDTO> getAll() {
         return service.getAll();
     }
+
+    @GetMapping("/{id}")
+    @Operation(description = "Get Azienda entity with ID")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "OK",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = Azienda.class)))
+    })
+    public ResponseEntity<AziendaResponseDTO> getByID(@PathVariable String id) {
+        AziendaResponseDTO aziendaResponseDTO = service.getByID(id);
+        return ResponseEntity.ok(aziendaResponseDTO);
+    }
+
 
     @PutMapping("/{id}")
     @Operation(description = "Update an Azienda by ID")
@@ -94,12 +104,7 @@ public class AziendaController {
                     content = @Content(
                             schema = @Schema(implementation = ErrorDetails.class)))
     })
-    public ResponseEntity<String> update(@PathVariable String id, @Valid @RequestBody AziendaRequestDTO request, BindingResult bindResult) {
-        if (bindResult.hasErrors()) {
-            StringBuilder errore = new StringBuilder("Errore di validazione: ");
-            bindResult.getAllErrors().forEach(error -> errore.append(error.getDefaultMessage()).append("; \n"));
-            return new ResponseEntity<>(errore.toString(), HttpStatus.BAD_REQUEST);
-        }
+    public ResponseEntity<String> update(@PathVariable String id, @Valid @RequestBody AziendaRequestDTO request) {
         service.update(id, request);
         return new ResponseEntity<>("Modifica Effettuata", HttpStatus.OK);
     }
@@ -123,13 +128,7 @@ public class AziendaController {
                     content = @Content(
                             schema = @Schema(implementation = ErrorDetails.class)))
     })
-    public ResponseEntity<?> updateParziale(@PathVariable String id, @RequestBody AziendaRequestPatchDTO patch, BindingResult bindResult) {
-        if (bindResult.hasErrors()) {
-            StringBuilder errore = new StringBuilder("Errore di validazione: ");
-            bindResult.getAllErrors().forEach(error -> errore.append(error.getDefaultMessage()).append("; \n"));
-            return new ResponseEntity<>(errore.toString(), HttpStatus.BAD_REQUEST);
-        }
-
+    public ResponseEntity<?> updateParziale(@PathVariable String id, @RequestBody AziendaRequestPatchDTO patch) {
         service.updateParziale(id, patch);
         //AziendaResponseDTO risposta = service.updateParziale(id, patch);
         return new ResponseEntity<>("Modifica effettuata", HttpStatus.OK);

@@ -1,6 +1,14 @@
 package com.azienda.DTO;
 
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+
 //server al client
+@Getter
+@Setter
+@EqualsAndHashCode
 public class AziendaResponseDTO {
     private String id;
     private String nomeAzienda;
@@ -11,50 +19,11 @@ public class AziendaResponseDTO {
     public AziendaResponseDTO() {
     }
 
-    public AziendaResponseDTO(String id, String nomeAzienda, String PIVA, int numeroPersonale) {
+    public AziendaResponseDTO(String id, double nettoAnnuale, String PIVA, int numeroPersonale, String nomeAzienda) {
         this.id = id;
-        this.nomeAzienda = nomeAzienda;
-        this.PIVA = PIVA;
-        this.numeroPersonale = numeroPersonale;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public double getNettoAnnuale() {
-        return nettoAnnuale;
-    }
-
-    public void setNettoAnnuale(double nettoAnnuale) {
         this.nettoAnnuale = nettoAnnuale;
-    }
-
-    public String getNomeAzienda() {
-        return nomeAzienda;
-    }
-
-    public void setNomeAzienda(String nomeAzienda) {
-        this.nomeAzienda = nomeAzienda;
-    }
-
-    public int getNumeroPersonale() {
-        return numeroPersonale;
-    }
-
-    public void setNumeroPersonale(int numeroPersonale) {
-        this.numeroPersonale = numeroPersonale;
-    }
-
-    public String getPIVA() {
-        return PIVA;
-    }
-
-    public void setPIVA(String PIVA) {
         this.PIVA = PIVA;
+        this.numeroPersonale = numeroPersonale;
+        this.nomeAzienda = nomeAzienda;
     }
 }

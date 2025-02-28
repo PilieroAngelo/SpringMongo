@@ -1,7 +1,15 @@
 package com.azienda.DTO;
 
 import jakarta.validation.constraints.Min;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
+@Builder
+@EqualsAndHashCode
 public class AziendaRequestPatchDTO {
     private String nomeAzienda;
 
@@ -19,29 +27,4 @@ public class AziendaRequestPatchDTO {
         this.numeroPersonale = numeroPersonale;
         this.nettoAnnuale = nettoAnnuale;
     }
-
-    public double getNettoAnnuale() {
-        return nettoAnnuale;
-    }
-
-    public void setNettoAnnuale(double nettoAnnuale) {
-        this.nettoAnnuale = nettoAnnuale;
-    }
-
-    public String getNomeAzienda() {
-        return nomeAzienda;
-    }
-
-    public void setNomeAzienda(String nomeAzienda) {
-        this.nomeAzienda = nomeAzienda;
-    }
-
-    public int getNumeroPersonale() {
-        return numeroPersonale;
-    }
-
-    public void setNumeroPersonale (int numeroPersonale) {
-        this.numeroPersonale = numeroPersonale;
-    }
-
 }
